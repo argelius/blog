@@ -7,10 +7,8 @@ const Metalsmith = require('metalsmith'),
 
 Metalsmith(__dirname)
     .metadata({
-      title: "My Static Site & Blog",
-      description: "It's about saying »Hello« to the World.",
-      generator: "Metalsmith",
-      url: "http://www.metalsmith.io/"
+      title: 'Snicker-snack',
+      description: "It's about saying »Hello« to the World."
     })
     .source('./src')
     .destination('./build')
