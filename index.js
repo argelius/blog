@@ -5,7 +5,8 @@ const Metalsmith   = require('metalsmith'),
       permalinks   = require('metalsmith-permalinks'),
       stylus       = require('metalsmith-stylus'),
       cleanCSS     = require('metalsmith-clean-css'),
-      htmlMinifier = require('metalsmith-html-minifier');
+      htmlMinifier = require('metalsmith-html-minifier'),
+      sitemap      = require('metalsmith-sitemap');
 
 Metalsmith(__dirname)
     .metadata({
@@ -35,6 +36,9 @@ Metalsmith(__dirname)
       engine: 'handlebars',
     }))
     .use(htmlMinifier())
+    .use(sitemap({
+      hostname: 'http://argeli.us'
+    }))
     .build(function(err, files) {
         if (err) { throw err; }
     });
