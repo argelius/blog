@@ -1,10 +1,11 @@
-const Metalsmith  = require('metalsmith'),
-      markdown    = require('metalsmith-markdown'),
-      collections = require('metalsmith-collections'),
-      layouts     = require('metalsmith-layouts'),
-      permalinks  = require('metalsmith-permalinks'),
-      stylus      = require('metalsmith-stylus'),
-      cleanCSS    = require('metalsmith-clean-css');
+const Metalsmith   = require('metalsmith'),
+      markdown     = require('metalsmith-markdown'),
+      collections  = require('metalsmith-collections'),
+      layouts      = require('metalsmith-layouts'),
+      permalinks   = require('metalsmith-permalinks'),
+      stylus       = require('metalsmith-stylus'),
+      cleanCSS     = require('metalsmith-clean-css'),
+      htmlMinifier = require('metalsmith-html-minifier');
 
 Metalsmith(__dirname)
     .metadata({
@@ -33,6 +34,7 @@ Metalsmith(__dirname)
     .use(permalinks({
       relative: false
     }))
+    .use(htmlMinifier())
     .build(function(err, files) {
         if (err) { throw err; }
     });

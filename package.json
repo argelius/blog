@@ -23,6 +23,7 @@
     "metalsmith": "^2.1.0",
     "metalsmith-clean-css": "^4.0.0",
     "metalsmith-collections": "^0.7.0",
+    "metalsmith-html-minifier": "^2.0.0",
     "metalsmith-layouts": "^1.6.5",
     "metalsmith-markdown": "^0.2.1",
     "metalsmith-pagination": "^1.4.0",
