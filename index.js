@@ -1,18 +1,25 @@
-const Metalsmith = require('metalsmith'),
-      markdown   = require('metalsmith-markdown'),
-      layouts    = require('metalsmith-layouts'),
-      permalinks = require('metalsmith-permalinks'),
-      stylus     = require('metalsmith-stylus'),
-      cleanCSS   = require('metalsmith-clean-css');
+const Metalsmith  = require('metalsmith'),
+      markdown    = require('metalsmith-markdown'),
+      collections = require('metalsmith-collections'),
+      layouts     = require('metalsmith-layouts'),
+      permalinks  = require('metalsmith-permalinks'),
+      stylus      = require('metalsmith-stylus'),
+      cleanCSS    = require('metalsmith-clean-css');
 
 Metalsmith(__dirname)
     .metadata({
-      title: 'Snicker-snack',
-      description: "It's about saying »Hello« to the World."
+      title: 'argeli.us',
+      description: "Articles about everything under the  sun. Mostly code."
     })
     .source('./src')
     .destination('./build')
-    .clean(false)
+    .clean(true)
+    .use(collections({
+      articles: {
+        pattern: 'posts/*.md',
+        sortBy: 'date'
+      }
+    }))
     .use(stylus({
       'include css': true
     }))
