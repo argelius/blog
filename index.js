@@ -28,11 +28,11 @@ Metalsmith(__dirname)
     .use(cleanCSS({
       rebase: true
     }))
-    .use(layouts({
-      engine: 'handlebars',
-    }))
     .use(permalinks({
       relative: false
+    }))
+    .use(layouts({
+      engine: 'handlebars',
     }))
     .use(htmlMinifier())
     .build(function(err, files) {
