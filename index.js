@@ -20,16 +20,18 @@ Metalsmith(__dirname)
         sortBy: 'date'
       }
     }))
+    .use(markdown())
     .use(stylus({
       'include css': true
     }))
     .use(cleanCSS({
       rebase: true
     }))
-    .use(markdown())
-    .use(permalinks())
     .use(layouts({
       engine: 'handlebars',
+    }))
+    .use(permalinks({
+      relative: false
     }))
     .build(function(err, files) {
         if (err) { throw err; }
