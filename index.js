@@ -9,7 +9,7 @@ const Metalsmith  = require('metalsmith'),
 Metalsmith(__dirname)
     .metadata({
       title: 'argeli.us',
-      description: "Articles about everything under the  sun. Mostly code."
+      description: "Articles about everything under the  sun. Mostly about code."
     })
     .source('./src')
     .destination('./build')
