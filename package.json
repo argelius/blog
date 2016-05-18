@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/argelius/blog#readme",
   "devDependencies": {
+    "babel-preset-es2015-rollup": "^1.1.1",
     "handlebars": "^4.0.5",
     "metalsmith": "^2.1.0",
     "metalsmith-clean-css": "^4.0.0",
@@ -30,6 +31,13 @@
     "metalsmith-permalinks": "^0.5.0",
     "metalsmith-sitemap": "^1.0.0",
     "metalsmith-stylus": "^2.0.0",
-    "normalize.css": "^4.1.1"
+    "normalize.css": "^4.1.1",
+    "promise": "^7.1.1",
+    "promise-polyfill": "^5.2.0",
+    "rollup": "^0.26.3",
+    "rollup-plugin-babel": "^2.4.0",
+    "rollup-plugin-commonjs": "^2.2.1",
+    "rollup-plugin-node-resolve": "^1.5.0",
+    "rollup-plugin-uglify": "^0.3.1"
   }
 }

@@ -8,6 +8,12 @@ const Metalsmith   = require('metalsmith'),
       htmlMinifier = require('metalsmith-html-minifier'),
       sitemap      = require('metalsmith-sitemap');
 
+const rollup      = require('./rollup'),
+      nodeResolve = require('rollup-plugin-node-resolve'),
+      commonjs    = require('rollup-plugin-commonjs'),
+      babel       = require('rollup-plugin-babel'),
+      uglify      = require('rollup-plugin-uglify');
+
 Metalsmith(__dirname)
     .metadata({
       title: 'argeli.us',
@@ -32,8 +38,22 @@ Metalsmith(__dirname)
     .use(permalinks({
       relative: false
     }))
+    .use(function(files, metalsmith, done) {
+      files['index.html'].isIndex = true;
+      done();
+    })
     .use(layouts({
       engine: 'handlebars',
+    }))
+    .use(rollup({
+      entry: 'index.js',
+      sourceMap: true,
+      plugins: [
+        nodeResolve(),
+        commonjs(),
+        babel(),
+        uglify()
+      ]
     }))
     .use(htmlMinifier())
     .use(sitemap({
