@@ -17,7 +17,7 @@ const rollup      = require('./rollup'),
 Metalsmith(__dirname)
     .metadata({
       title: 'argeli.us',
-      description: "Articles about everything under the  sun. Mostly about code."
+      description: "Everything under the  sun. Mostly code."
     })
     .source('./src')
     .destination('./build')
