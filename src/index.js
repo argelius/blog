@@ -3,11 +3,66 @@ import Promise from 'promise-polyfill';
 
 let running = false;
 
-const animateTitle = function(el) {
-  return Promise.resolve();
+const transformProp = (() => {
+  const el = document.createElement('div');
+  if(el.style.transform == null) {
+    const vendors = ['Webkit', 'Moz', 'ms'];
+    for(const vendor in vendors) {
+      if(el.style[ vendors[vendor] + 'Transform' ] !== undefined) {
+        return vendors[vendor] + 'Transform';
+      }
+    }
+  }
+
+  return 'transform';
+})();
+
+const animateTo = (from, to) => {
+  const fromSize = parseFloat(window.getComputedStyle(from).fontSize),
+        toSize  = parseFloat(window.getComputedStyle(to).fontSize);
+
+  let scale = fromSize / toSize,
+      x = from.offsetLeft - to.offsetLeft,
+      y = from.offsetTop - to.offsetTop - 1;
+
+  to.style[transformProp] = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
+
+  const n = 20;
+
+  const scaleStep = (1.0 - scale) / n,
+        xStep     = x / n,
+        yStep     = y / n;
+
+  return new Promise((resolve) => {
+    (function morph() {
+      scale = Math.min(scale + scaleStep, 1.0);
+      x     = Math.max(x - xStep, 0);
+      y     = Math.max(y - yStep, 0);
+
+      to.style[transformProp] = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
+
+      if (scale === 1.0 && x === 0 && y === 0) {
+        resolve();
+      }
+      else {
+        raf(morph);
+      }
+    })();
+  });
 };
 
-const hideStuff = function(els) {
+const animateTitle = (el) => {
+  const titleElement = document.querySelector('.header-title');
+
+  titleElement.innerHTML = el.innerHTML;
+  el.style.opacity = 0;
+  titleElement.parentNode.style.opacity = 1;
+  titleElement.parentNode.querySelector('.header-description').style.opacity = 0;
+
+  return animateTo(el, titleElement);
+};
+
+const hideStuff = (els) => {
   const promises = els.map((el) => {
     return new Promise((resolve) => {
       el.style.opacity = 1;
@@ -47,6 +102,7 @@ const findEverythingElse = function(el) {
   );
 };
 
+
 document.addEventListener('click', (e) => {
   if (e.target.classList.contains('article-link')) {
     e.preventDefault();
@@ -59,6 +115,9 @@ document.addEventListener('click', (e) => {
 
     findEverythingElse(e.target)
       .then(hideStuff)
-      .then(() => location.href = e.target.href);
+      .then(() => animateTitle(e.target))
+      .then(() => {
+        location.href = e.target.href;
+      })
   }
 }, true);
