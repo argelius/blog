@@ -6,7 +6,8 @@ const Metalsmith   = require('metalsmith'),
       stylus       = require('metalsmith-stylus'),
       cleanCSS     = require('metalsmith-clean-css'),
       htmlMinifier = require('metalsmith-html-minifier'),
-      sitemap      = require('metalsmith-sitemap');
+      sitemap      = require('metalsmith-sitemap'),
+      pagination   = require('metalsmith-pagination');
 
 const rollup      = require('./rollup'),
       nodeResolve = require('rollup-plugin-node-resolve'),
@@ -26,6 +27,14 @@ Metalsmith(__dirname)
       articles: {
         pattern: 'posts/*.md',
         sortBy: 'date'
+      }
+    }))
+    .use(pagination({
+      articles: {
+        layout: 'layout.html',
+        perPage: 5,
+        first: 'index.html',
+        path: ':num/index.html'
       }
     }))
     .use(markdown())
