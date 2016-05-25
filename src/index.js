@@ -121,3 +121,6 @@ document.addEventListener('click', (e) => {
       })
   }
 }, true);
+
+// Fix to force FF reload.
+window.onunload = () => {};
