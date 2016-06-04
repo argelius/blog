@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "node index.js",
-    "deploy": "npm run build; git add build; git commit build -m \"Deploy\"; git push origin master; git subtree push --prefix build origin gh-pages",
+    "deploy": "npm run lint && npm run build && git add build && git commit build -m \"Deploy\" && git push origin master && git subtree push --prefix build origin gh-pages",
+    "lint": "eslint src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,6 +21,9 @@
   "homepage": "https://github.com/argelius/blog#readme",
   "devDependencies": {
     "babel-preset-es2015-rollup": "^1.1.1",
+    "eslint": "^2.11.1",
+    "eslint-plugin-promise": "^1.3.2",
+    "eslint-plugin-standard": "^1.3.2",
     "handlebars": "^4.0.5",
     "metalsmith": "^2.1.0",
     "metalsmith-clean-css": "^4.0.0",

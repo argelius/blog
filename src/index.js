@@ -5,10 +5,10 @@ let running = false;
 
 const transformProp = (() => {
   const el = document.createElement('div');
-  if(el.style.transform == null) {
+  if (el.style.transform == null) {
     const vendors = ['Webkit', 'Moz', 'ms'];
-    for(const vendor in vendors) {
-      if(el.style[ vendors[vendor] + 'Transform' ] !== undefined) {
+    for (const vendor in vendors) {
+      if (el.style[ vendors[vendor] + 'Transform' ] !== undefined) {
         return vendors[vendor] + 'Transform';
       }
     }
@@ -18,33 +18,32 @@ const transformProp = (() => {
 })();
 
 const animateTo = (from, to) => {
-  const fromSize = parseFloat(window.getComputedStyle(from).fontSize),
-        toSize  = parseFloat(window.getComputedStyle(to).fontSize);
+  const fromSize = parseFloat(window.getComputedStyle(from).fontSize);
+  const toSize = parseFloat(window.getComputedStyle(to).fontSize);
 
-  let scale = fromSize / toSize,
-      x = from.offsetLeft - to.offsetLeft,
-      y = from.offsetTop - to.offsetTop - 1;
+  let scale = fromSize / toSize;
+  let x = from.offsetLeft - to.offsetLeft;
+  let y = from.offsetTop - to.offsetTop - 1;
 
   to.style[transformProp] = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
 
   const n = 20;
 
-  const scaleStep = (1.0 - scale) / n,
-        xStep     = x / n,
-        yStep     = y / n;
+  const scaleStep = (1.0 - scale) / n;
+  const xStep = x / n;
+  const yStep = y / n;
 
   return new Promise((resolve) => {
     (function morph() {
       scale = Math.min(scale + scaleStep, 1.0);
-      x     = Math.max(x - xStep, 0);
-      y     = Math.max(y - yStep, 0);
+      x = Math.max(x - xStep, 0);
+      y = Math.max(y - yStep, 0);
 
       to.style[transformProp] = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
 
       if (scale === 1.0 && x === 0 && y === 0) {
         resolve();
-      }
-      else {
+      } else {
         raf(morph);
       }
     })();
@@ -72,8 +71,7 @@ const hideStuff = (els) => {
 
         if (el.style.opacity > 0) {
           raf(fade);
-        }
-        else {
+        } else {
           resolve();
         }
       })();
@@ -102,7 +100,6 @@ const findEverythingElse = function(el) {
   );
 };
 
-
 document.addEventListener('click', (e) => {
   if (e.target.classList.contains('article-link')) {
     e.preventDefault();
@@ -118,7 +115,7 @@ document.addEventListener('click', (e) => {
       .then(() => animateTitle(e.target))
       .then(() => {
         location.href = e.target.href;
-      })
+      });
   }
 }, true);
 
